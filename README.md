@@ -22,10 +22,10 @@ Los solvers y JavaFX fueron integrados mediante sus correspondientes Java APIs (
 Java necesita los archivos binarios tanto de los solvers como de JavaFX para poder ejecutar correctamente, por ende, para los archivos de programa donde se empaqueta cada uno se recomiendan, en caso de no seguir las rutas de instalación por defecto, ser trasladados a la ruta del disco duro "C:\" para mayor facilidad al momento de ser buscados por el IDE.
 
 __EJEMPLO:__
-C:\javafx-sdk-26.0.1 ==> __ruta de los archivos trasladada__
-C:\gurobi1302        ==> ruta por defecto de Gurobi
-C:\Program Files\IBM ==> ruta por defecto de CPLEX
-C:\glpk-4.65         ==> ruta por defecto de GLPK
+- C:\javafx-sdk-26.0.1 ==> __ruta de los archivos trasladada__
+- C:\gurobi1302        ==> ruta por defecto de Gurobi
+- C:\Program Files\IBM ==> ruta por defecto de CPLEX
+- C:\glpk-4.65         ==> ruta por defecto de GLPK
 
 Para el caso de Apache Commons Math, no necesita estas rutas ya que no utilizan binarios, basta con solo insertar sus archivos .JAR en Java Netbeans: 
 __ruta "creada" recomendada donde ubiques todos tus archivos .JAR para la "classpath" y "modulepath"__
