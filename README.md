@@ -4,16 +4,16 @@ Proyecto Final de Estructura de Datos con el docente Juan Carlos García Ojeda -
 Se realizó una interfaz gráfica en el IDE *__"Java Netbeans"__* para resolver problemas de procesos de flujos PNS basados en P-Graph integrando Solvers comerciales y de open source mediante la optimización de resultados con técnicas de modelado MILP y algoritmos Branch And Bound.
 
 Para la construcción del proyecto, se distribuyó en cuatro (4) capas/carpetas su funcionamiento:
-    - Interfaz     ==> contiene el main y las visuales
-    - Modelo       ==> modelado en java basado en: materiales, unidades de proceso y tasas de flujo.
-    - Optimización ==> contiene las clases de Optimizacion de cada solver y la clase que almacena el resultado.
-    - Persistencia ==> contiene la lectura del modelo P-Graph en .txt, y guardado de soluciones en .JSON, así como el manejo de errores.
+- Interfaz     ==> contiene el main y las visuales
+- Modelo       ==> modelado en java basado en: materiales, unidades de proceso y tasas de flujo.
+- Optimización ==> contiene las clases de Optimizacion de cada solver y la clase que almacena el resultado.
+- Persistencia ==> contiene la lectura del modelo P-Graph en .txt, y guardado de soluciones en .JSON, así como el manejo de errores.
 
 Los solvers utilizados fueron:
-    - Gurobi                      ==> Descarga del software/kit, adquisición licencia acádemica y archivo .JAR
-    - Apache Commons Math 4 core  ==> Descarga de archivo(s) .JAR
-    - CPLEX                       ==> Descarga del software/Kit y archivo .JAR
-    - GLPK                        ==> Descarga del software/kit y archivo .JAR
+- Gurobi                      ==> Descarga del software/kit, adquisición licencia acádemica y archivo .JAR
+- Apache Commons Math 4 core  ==> Descarga de archivo(s) .JAR
+- CPLEX                       ==> Descarga del software/Kit y archivo .JAR
+- GLPK                        ==> Descarga del software/kit y archivo .JAR
 
 Y, para la configuración de la interfaz gráfica, visuales, analisis y comparación de resultados se utilizó *__JavaFX__*. Para ello se debió adquirir los archivos .bin y .JAR desde la página de Oracle JavaFX, descargando el .zip.
 
