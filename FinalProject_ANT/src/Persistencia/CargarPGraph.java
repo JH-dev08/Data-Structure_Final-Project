@@ -1,22 +1,19 @@
 package Persistencia;
 
-import Modelo.UnidadOperativa;
-import Modelo.TasaFlujo;
-import Modelo.Material;
-import Modelo.ModeloPGraph;
+import Modelo.*;
 import java.io.*;
 import java.util.regex.*;
 
 public class CargarPGraph {
-    private enum Section { NONE, MATERIALS, OPERATING_UNITS, FLOW_RATES }           // Categorizar linea de texto en el Modelo
+    private enum Seccion { NONE, MATERIALES, UNIDADES_OPERATIVAS, TASA_FLUJOS }           // Categorizar linea de texto en el Modelo
 
-    public ModeloPGraph loadModel(File file) throws IOException, LectorExcepciones {
+    public ModeloPGraph cargarModelo(File file) throws IOException, LectorExcepciones {
         ModeloPGraph model = new ModeloPGraph();
         
         try (BufferedReader br = new BufferedReader(new FileReader(file))) {
             String line;
             int lineNumber = 0;
-            Section currentSection = Section.NONE;                                  // Inicialmente no se tiene ninguna categoria
+            Seccion currentSection = Seccion.NONE;                                  // Inicialmente no se tiene ninguna categoria
 
             while ((line = br.readLine()) != null) {
                 lineNumber++;
@@ -29,21 +26,21 @@ public class CargarPGraph {
 
                 // Cambios de sección detectados por las etiquetas base
                 if (line.equals("materials:")) {
-                    currentSection = Section.MATERIALS;
+                    currentSection = Seccion.MATERIALES;
                     continue;
                 } else if (line.equals("operating_units:")) {
-                    currentSection = Section.OPERATING_UNITS;
+                    currentSection = Seccion.UNIDADES_OPERATIVAS;
                     continue;
                 } else if (line.equals("material_to_operating_unit_flow_rates:")) {
-                    currentSection = Section.FLOW_RATES;
+                    currentSection = Seccion.TASA_FLUJOS;
                     continue;
                 }
 
                 // Procesamiento según la sección activa
                 switch (currentSection) {
-                    case MATERIALS -> parseMaterial(line, model, lineNumber);
-                    case OPERATING_UNITS -> parseOperatingUnit(line, model, lineNumber);
-                    case FLOW_RATES -> parseFlowRate(line, model, lineNumber);
+                    case MATERIALES -> LeerMaterial(line, model, lineNumber);
+                    case UNIDADES_OPERATIVAS -> LeerUnidadOperativa(line, model, lineNumber);
+                    case TASA_FLUJOS -> LeerTasaFlujo(line, model, lineNumber);
                     default -> throw new LectorExcepciones("Datos huérfanos fuera de una sección válida", lineNumber);
                 }
             }
@@ -51,7 +48,7 @@ public class CargarPGraph {
         return model;
     }
 
-    private void parseMaterial(String line, ModeloPGraph model, int lineNum) throws LectorExcepciones {
+    private void LeerMaterial(String line, ModeloPGraph model, int lineNum) throws LectorExcepciones {
         // Ejemplo esperado: A: raw_material o D: product, flow_rate_lower_bound=10
         String[] parts = line.split(":", 2);
         if (parts.length < 2) throw new LectorExcepciones("Formato de material inválido", lineNum);
@@ -64,17 +61,17 @@ public class CargarPGraph {
 
         // Extraer atributos opcionales mediante expresiones regulares si existen
         if (details.contains("flow_rate_lower_bound")) {
-            lowerBound = extractDoubleAttribute(details, "flow_rate_lower_bound", lineNum);
+            lowerBound = extraerParteDouble(details, "flow_rate_lower_bound", lineNum);
         }
 
         // Se instancia el objeto del dominio y se añade al modelo cargado en memoria
         model.addMaterial(new Material(id, type, lowerBound));
     }
     
-    private double extractDoubleAttribute(String text, String attributeName, int lineNum) throws LectorExcepciones {
+    private double extraerParteDouble(String text, String attName, int lineNum) throws LectorExcepciones {
         try {
             // Buscamos el patrón "nombreAtributo=numero"
-            String regex = attributeName + "\\s*=\\s*([0-9]*\\.?[0-9]+)";
+            String regex = attName + "\\s*=\\s*([0-9]*\\.?[0-9]+)";
             java.util.regex.Pattern pattern = java.util.regex.Pattern.compile(regex);
             java.util.regex.Matcher matcher = pattern.matcher(text);
             
@@ -83,11 +80,11 @@ public class CargarPGraph {
             }
             return 0.0;
         } catch (NumberFormatException e) {
-            throw new LectorExcepciones("Error al leer el número del atributo " + attributeName, lineNum);
+            throw new LectorExcepciones("Error al leer el número del atributo " + attName, lineNum);
         }
     }
 
-    private void parseOperatingUnit(String line, ModeloPGraph model, int lineNum) throws LectorExcepciones {
+    private void LeerUnidadOperativa(String line, ModeloPGraph model, int lineNum) throws LectorExcepciones {
         // Ejemplo esperado: O1: capacity_upper_bound=1000, fix_cost=4, proportional_cost=2
         String[] parts = line.split(":", 2);
         if (parts.length < 2) throw new LectorExcepciones("Formato de unidad operativa inválido", lineNum);
@@ -95,14 +92,14 @@ public class CargarPGraph {
         String id = parts[0].trim();
         String details = parts[1].trim();
 
-        double capacity = extractDoubleAttribute(details, "capacity_upper_bound", lineNum);
-        double fixCost = extractDoubleAttribute(details, "fix_cost", lineNum);
-        double propCost = extractDoubleAttribute(details, "proportional_cost", lineNum);
+        double capacity = extraerParteDouble(details, "capacity_upper_bound", lineNum);
+        double fixCost = extraerParteDouble(details, "fix_cost", lineNum);
+        double propCost = extraerParteDouble(details, "proportional_cost", lineNum);
 
         model.addUnidadOperativa(new UnidadOperativa(id, capacity, fixCost, propCost));
     }
 
-    private void parseFlowRate(String line, ModeloPGraph model, int lineNum) throws LectorExcepciones {
+    private void LeerTasaFlujo(String line, ModeloPGraph model, int lineNum) throws LectorExcepciones {
         // Ejemplo esperado: (A, O1): 5.5 o (O1, D): 1.0
         Pattern pattern = Pattern.compile("\\(([^,]+),\\s*([^\\)]+)\\):\\s*([\\d\\.]+)");
         Matcher matcher = pattern.matcher(line);

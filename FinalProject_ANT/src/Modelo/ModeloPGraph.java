@@ -12,8 +12,8 @@ public class ModeloPGraph {
 
     // Métodos para agregar
     public void addMaterial(Material m) { materiales.add(m); }
-    public void addUnidadOperativa(UnidadOperativa ou) { unidadesOperativas.add(ou); }
-    public void addTasaFlujo(TasaFlujo fr) { tasaFlujos.add(fr); }
+    public void addUnidadOperativa(UnidadOperativa u) { unidadesOperativas.add(u); }
+    public void addTasaFlujo(TasaFlujo t) { tasaFlujos.add(t); }
 
     // Getters
     public List<Material> getMateriales() { return materiales; }

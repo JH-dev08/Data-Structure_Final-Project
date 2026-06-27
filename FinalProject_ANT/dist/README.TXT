@@ -11,7 +11,7 @@ JAR files manifest file (MANIFEST.MF).
 To run the project from the command line, go to the dist folder and
 type the following:
 
-java -jar "FinalProject_ANT.jar" 
+java -jar "CARDENAS_ANDRES_010_HERRERA_JOSE_001_MORALES_JADER_028_PROYECTOFINAL.jar" 
 
 To distribute this project, zip up the dist folder (including the lib folder)
 and distribute the ZIP file.

@@ -1,9 +1,9 @@
+// CARDENAS_ANDRES_010_HERRERA_JOSE_001_MORALES_JADER_028
 package Interfaz;
 
 import Modelo.ModeloPGraph;
 import Optimizacion.*;
-import Persistencia.CargarPGraph;
-import Persistencia.ExportarSoluciones;
+import Persistencia.*;
 
 import javafx.geometry.Insets;
 import javafx.scene.control.*;
@@ -24,10 +24,10 @@ public class VentanaPrincipal {
     private ComboBox<String> comboSolvers;
     private Button btnCargar;
     private Button btnEjecutar;
+    private Button btnExportarJSON;
     
     // Variables globales existentes...
     private final List<ResultadoOptimizacion> historialResultados = new ArrayList<>(); // Lista de soluciones
-    private Button btnExportarJSON;
 
     public VentanaPrincipal(Stage stage) {
         root = new BorderPane();
@@ -113,7 +113,7 @@ public class VentanaPrincipal {
                 PanelAnalitica.limpiarTodo();
                 
                 // ──> CONEXION DEL LECTOR
-                modeloActual = archi.loadModel(archivo); 
+                modeloActual = archi.cargarModelo(archivo); 
 
                 // Si la lectura fue exitosa, imprimimos las estadísticas en la consola central
                 consola.appendText("✅ ¡Modelo cargado exitosamente!\n");

@@ -95,7 +95,7 @@ public class OptimizadorGurobi {
             modeloGurobi.set(GRB.IntParam.PoolSearchMode, 2);
 
             // PoolSolutions es el límite máximo de soluciones a guardar en memoria (ej. 10, 50, o 100)
-            modeloGurobi.set(GRB.IntParam.PoolSolutions, 4); // 1 optima y 3 subobtimas.
+            modeloGurobi.set(GRB.IntParam.PoolSolutions, 50);
 
             // Ahora sí, optimizamos
             modeloGurobi.optimize();
@@ -131,6 +131,12 @@ public class OptimizadorGurobi {
                         }
                     }
 
+                    System.out.println("==================================================================");
+                    if(i == 0)
+                        System.out.println("Costo Solucion Optima: " + costoSolucion);
+                    else
+                        System.out.println("Costo Solucion Sub-Optima " + i + ": " + costoSolucion);
+                        
                     // 5. Agregamos el resultado a nuestra lista
                     solucionesDeEstaCorrida.add(new ResultadoOptimizacion(
                         "Gurobi", 
