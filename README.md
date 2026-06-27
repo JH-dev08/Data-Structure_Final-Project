@@ -17,7 +17,7 @@ Los solvers utilizados fueron:
 
 Y, para la configuración de la interfaz gráfica, visuales, analisis y comparación de resultados se utilizó *__JavaFX__*. Para ello se debió adquirir los archivos .bin y .JAR desde la página de Oracle JavaFX, descargando el .zip.
 
-Los solvers y JavaFX fueron integrados mediante sus correspondientes Java APIs (librerías en formato .JAR) en el apartado *__Classpath__* de librerias y para el apartado *__Modulepath__* se requirió insertar de igual manera tres (3) librerias de JavaFX, agregadas ya en sus respectivas carpetas dentro del proyecto.
+Los solvers y JavaFX fueron integrados mediante sus correspondientes Java APIs (librerías en formato .JAR) en el apartado *__Classpath__* de librerias y para el apartado *__Modulepath__* se requirió insertar de igual manera tres (3) librerias de JavaFX, agregadas ya en sus respectivas carpetas dentro del proyecto. Estos archivos se ubican fisicamente en la carpeta *__lib__* del proyecto para menores complicaciones. Y el cargue del modelo de entrada *.txt* se encuentra en la carpeta *__data__*, donde de igual manera se generan automaticamente las soluciones almacenadas en archivos *.json*.
 
 Java necesita los archivos binarios tanto de los solvers como de JavaFX para poder ejecutar correctamente, por ende, para los archivos de programa donde se empaqueta cada uno se recomiendan, en caso de no seguir las rutas de instalación por defecto, ser trasladados a la ruta del disco duro "C:\" para mayor facilidad al momento de ser buscados por el IDE.
 
